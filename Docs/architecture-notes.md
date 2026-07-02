@@ -394,4 +394,37 @@ Successfully built an end-to-end Azure-based Retrieval-Augmented Generation appl
 
 ***
 
-T
+# Phase 4 – Integration Architecture
+
+## Goal
+
+Connect the Power Apps front end to the Azure AI backend to provide real-time contract risk analysis with source citations.
+
+## Planned Architecture
+
+Power Apps
+    ↓
+Power Automate
+    ↓
+Azure Function (Python)
+    ↓
+Azure AI Search
+    ↓
+GPT-5-mini
+    ↓
+JSON Response
+    ↓
+Power Apps
+
+## Data Flow
+
+1. User enters a contract question in Power Apps.
+2. Power Automate receives the question.
+3. Power Automate sends the question to an Azure Function.
+4. Azure Function performs vector retrieval from Azure AI Search.
+5. Retrieved contract chunks are sent to GPT-5-mini.
+6. GPT-5-mini generates a risk assessment.
+7. Azure Function returns:
+   - Answer
+   - Source citations
+8. Power Apps displays the response.
