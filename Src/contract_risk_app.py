@@ -115,11 +115,10 @@ def build_context(chunks):
         chunk_text = item.get("chunk") or ""
 
         context_parts.append(
-            f"[Source {index}]\n"
-            f"Title: {title}\n"
+            f"DOCUMENT: {title}\n"
             f"Chunk ID: {chunk_id}\n"
             f"Text:\n{chunk_text}\n"
-        )
+)
 
     return "\n---\n".join(context_parts)
 
@@ -140,8 +139,21 @@ Use only the provided contract excerpts as your source material.
 
 If the provided excerpts do not contain enough information to answer the question, say so clearly.
 
-When you make a claim, cite the relevant source using this format:
-[Source 1], [Source 2], etc.
+When you make a claim:
+
+- Cite the actual document filename.
+- Never use Source 1, Source 2, or similar labels.
+- Only cite filenames that appear in the provided context.
+
+Example:
+
+(Employment-Agreement-001.pdf)
+
+or
+
+Sources Used:
+- Employment-Agreement-001.pdf
+- Vendor-Agreement-001.pdf
 
 Structure your answer with:
 1. Short Answer
@@ -170,6 +182,34 @@ Retrieved contract excerpts:
     return response.choices[0].message.content
 
 
+# -----------------------------------------------------------
+# Azure Function helper
+# ------------------------------------------------------------
+
+def run_contract_risk_analysis(question):
+    chunks = retrieve_contract_chunks(question)
+
+    if not chunks:
+        return {
+            "answer": "No relevant contract chunks were found.",
+            "sources": []
+        }
+
+    answer = analyze_contract_risk(question, chunks)
+
+    sources = []
+
+    for chunk in chunks:
+        title = chunk.get("title")
+
+        if title and title not in sources:
+            sources.append(title)
+
+    return {
+        "answer": answer,
+        "sources": sources
+    }
+
 # ------------------------------------------------------------
 # Step 5: Full app flow
 # ------------------------------------------------------------
@@ -197,6 +237,8 @@ def run_contract_risk_app():
     print("\nContract Risk Analysis")
     print("----------------------")
     print(answer)
+
+    
 
 
 # ------------------------------------------------------------
