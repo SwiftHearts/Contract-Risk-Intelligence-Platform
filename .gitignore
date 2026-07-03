@@ -10,3 +10,6 @@ __pycache__/
 
 local.settings.json
 .python_packages
+.vscode/
+.Rhistory
+*_backup.py
