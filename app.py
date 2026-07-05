@@ -48,7 +48,7 @@ if st.button("Analyze Contract"):
         st.subheader("Sources Used")
 
         for source in result.get("sources", []):
-        st.markdown(f"- {source}")
+            st.markdown(f"- {source}")
 
     else:
         st.error(result.get("message", "An unknown error occurred."))
