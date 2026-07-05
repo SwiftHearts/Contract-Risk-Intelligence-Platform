@@ -1,34 +1,114 @@
 
+# Solution Architecture
 
-# Contract Risk Intelligence Platform
+## Overview
 
-## Project Overview
+The Contract Risk Intelligence Platform supports two deployment models:
 
-### Project Name
+1. **Enterprise Law Firm Deployment** – built with Microsoft Power Platform for legal teams operating within Microsoft 365.
+2. **Public Demonstration Deployment** – built with Streamlit to allow website visitors, recruiters, and prospective clients to experience the solution without requiring Microsoft authentication.
 
-**Contract Risk Intelligence Platform**
-
-### Status
-
-✅ **Version 1.0 – Deployed and Operational**
-
-### Purpose
-
-The Contract Risk Intelligence Platform is an AI-powered legal document analysis solution built on Microsoft Azure. The platform uses Retrieval-Augmented Generation (RAG) to analyze contracts, identify potential risks, and generate grounded responses supported by source citations.
-
-Rather than relying solely on model knowledge, the application retrieves relevant contract content from Azure AI Search and uses GPT-5-mini to generate responses based on actual contract language.
-
-### Business Problem
-
-Legal professionals often spend significant time reviewing contracts, locating clauses, assessing risk, and comparing language across multiple agreements.
-
-The Contract Risk Intelligence Platform streamlines this process by allowing attorneys and legal teams to ask natural-language questions and receive AI-generated analyses with direct references to supporting contract documents.
+Both front ends use the same Azure-based Retrieval-Augmented Generation (RAG) backend to provide grounded contract analysis and source-cited responses.
 
 ***
 
-# Solution Architecture
+# Enterprise Law Firm Architecture
 
-## End-to-End Architecture
+This deployment model demonstrates how the solution would typically be implemented within a law firm using Microsoft technologies.
+
+```text
+Attorney / Legal Team
+          ↓
+Power Apps
+          ↓
+Power Automate
+          ↓
+Azure Function API
+          ↓
+Azure AI Search
+          ↓
+Azure AI Foundry
+          ↓
+GPT-5-mini
+          ↓
+Contract Risk Analysis
+          ↓
+Filename-Based Citations
+          ↓
+Power Apps
+```
+
+## Purpose
+
+The enterprise version provides attorneys and legal professionals with a secure, user-friendly experience inside the Microsoft ecosystem.
+
+Users interact with a Power Apps interface while Power Automate orchestrates communication with an Azure Function API that performs Retrieval-Augmented Generation (RAG) using Azure AI Search and GPT-5-mini.
+
+## Business Value
+
+✅ Microsoft 365 Integration
+
+✅ Low-Code User Experience
+
+✅ Secure Internal Deployment
+
+✅ Familiar Interface for Legal Teams
+
+✅ Scalable Enterprise Architecture
+
+✅ Rapid Workflow Automation
+
+***
+
+# Public Demonstration Architecture
+
+This deployment model demonstrates the public-facing version of the platform used for portfolio demonstrations, recruiter evaluation, website visitors, and prospective client engagements.
+
+```text
+Website Visitor
+          ↓
+Streamlit App
+          ↓
+Azure Function API
+          ↓
+Azure AI Search
+          ↓
+Azure AI Foundry
+          ↓
+GPT-5-mini
+          ↓
+Contract Risk Analysis
+          ↓
+Filename-Based Citations
+          ↓
+Streamlit App
+```
+
+## Purpose
+
+The public version allows anyone to experience the platform without requiring a Microsoft account.
+
+The Streamlit application provides a lightweight web interface while leveraging the same Azure-based backend used by the enterprise deployment.
+
+## Business Value
+
+✅ No Sign-In Required
+
+✅ Public Demonstration Environment
+
+✅ Recruiter and Portfolio Review
+
+✅ Client Proof-of-Concept
+
+✅ Rapid AI Application Deployment
+
+✅ Easy Website Integration
+
+***
+
+# Shared Retrieval-Augmented Generation (RAG) Backend
+
+Both deployment models use the same Azure AI architecture.
 
 ```text
 Contract PDFs
@@ -42,211 +122,73 @@ Vector Embeddings
       ↓
 Vector Search
       ↓
-Azure Function
+Azure Function API
+      ↓
+Azure AI Foundry
       ↓
 GPT-5-mini
       ↓
 Contract Risk Analysis
       ↓
 Filename-Based Citations
-      ↓
-Power Apps
 ```
 
-## User Experience Architecture
+***
+
+# Core Components
+
+## Contract Repository
+
+### Azure Blob Storage
+
+Stores contract PDF documents used for indexing and retrieval.
+
+### Sample Documents
 
 ```text
-Power Apps
-      ↓
-Power Automate
-      ↓
-Azure Function
-      ↓
-Azure AI Search
-      ↓
-GPT-5-mini
-      ↓
-Answer + Citations
-      ↓
-Power Apps
+Employment-Agreement-001.pdf
+NDA-001.pdf
+SaaS-Agreement-001.pdf
+Service-Agreement-001.pdf
+Vendor-Agreement-001.pdf
+Vendor-Agreement-002.pdf
 ```
-
-***
-
-# Azure Resources
-
-## Resource Group
-
-**Name:** `rg-sterling-legal`
-
-**Region:** Central US
-
-**Status:** ✅ Active
-
-### Purpose
-
-Central container for all Azure resources used by the solution.
-
-***
-
-## Azure AI Foundry
-
-**Project:** `contract-risk-intelligence`
-
-**Status:** ✅ Active
-
-### Purpose
-
-Hosts the AI models used for embedding generation and response generation.
-
-### Model Deployments
-
-✅ gpt-5-mini
-
-✅ text-embedding-3-small
-
-**Deployment Type:** Global Standard
 
 ***
 
 ## Azure AI Search
 
-**Name:** `sterling-contract-search`
+Provides semantic retrieval and vector search capabilities across indexed contract content.
 
-**Region:** Central US
+### Responsibilities
 
-**Tier:** Free
-
-**Status:** ✅ Active
-
-### Purpose
-
-Provides vector-based retrieval and semantic search across contract documents.
-
-***
-
-## Azure Storage Account
-
-**Name:** `sterlinglegalstorage`
-
-**Region:** Central US
-
-**Redundancy:** LRS
-
-**Performance Tier:** Standard
-
-**Status:** ✅ Active
-
-### Purpose
-
-Stores contract PDF files for indexing and retrieval.
-
-***
-
-## Blob Container
-
-**Name:** `contracts`
-
-**Access Level:** Private
-
-**Status:** ✅ Active
-
-### Purpose
-
-Stores source legal agreements used by the platform.
-
-***
-
-## Azure Function App
-
-**Name:** `sterling-contract-risk-api`
-
-**Status:** ✅ Deployed
-
-### Purpose
-
-Acts as the application API layer.
-
-Responsibilities include:
-
-* Receiving user questions
-* Generating embeddings
-* Executing vector search
-* Building retrieval context
-* Calling GPT-5-mini
-* Returning analysis and citations
-
-***
-
-# Contract Dataset
-
-## Storage Location
-
-```text
-contracts/
-```
-
-## Sample Documents
-
-* Employment-Agreement-001.pdf
-* NDA-001.pdf
-* SaaS-Agreement-001.pdf
-* Service-Agreement-001.pdf
-* Vendor-Agreement-001.pdf
-* Vendor-Agreement-002.pdf
-
-**Status:** ✅ Indexed
-
-### Purpose
-
-Provides a representative collection of legal agreements containing various contractual obligations, risks, and clause structures used for testing retrieval and analysis capabilities.
-
-***
-
-# Risk Analysis Framework
-
-**Location:** `Docs/risk-framework.md`
-
-**Status:** ✅ Complete
-
-### Purpose
-
-Defines the contract risk categories evaluated by the application.
-
-### Risk Categories
-
-* Termination Risk
-* Liability Risk
-* Indemnification Risk
-* Auto-Renewal Risk
-* Payment Risk
-* Compliance Risk
-
-***
-
-# Azure AI Search Configuration
-
-## Search Index
-
-```text
-rag-1782927108192
-```
+* Contract chunk storage
+* Metadata storage
+* Vector storage
+* Semantic search
+* Similarity search
+* Content retrieval
 
 ### Indexed Fields
 
-| Field        | Purpose                    |
-| ------------ | -------------------------- |
-| chunk\_id    | Unique chunk identifier    |
-| parent\_id   | Parent document identifier |
-| chunk        | Contract text chunk        |
-| title        | Source document title      |
-| text\_vector | Vector embedding           |
-
-### Embedding Model
-
 ```text
-text-embedding-3-small
+chunk_id
+parent_id
+chunk
+title
+text_vector
 ```
+
+***
+
+## Embedding Model
+
+### text-embedding-3-small
+
+Used to generate vector embeddings for:
+
+* Contract content
+* User questions
 
 ### Embedding Dimensions
 
@@ -256,251 +198,64 @@ text-embedding-3-small
 
 ***
 
-# Phase 1 – Contract Ingestion and Search Indexing
+## Azure Function API
 
-## Objective
+Acts as the application layer between user interfaces and Azure AI services.
 
-Create a searchable vector index from a collection of legal contract documents.
+### Responsibilities
 
-## Technologies
-
-* Azure Blob Storage
-* Azure AI Search
-* Azure AI Foundry
-* text-embedding-3-small
-
-## Results
-
-✅ Contract PDFs uploaded
-
-✅ Embeddings generated
-
-✅ Vector index created
-
-✅ Semantic search enabled
-
-✅ Documents successfully indexed
-
-## Outcome
-
-Contract content became searchable through vector similarity and semantic retrieval techniques.
+* Receive user questions
+* Generate embeddings
+* Execute vector search
+* Retrieve relevant contract content
+* Create retrieval context
+* Invoke GPT-5-mini
+* Return answers and citations
 
 ***
 
-# Phase 2 – Python RAG Application
+## Azure AI Foundry
 
-## Objective
+Provides the AI models that power contract analysis.
 
-Build a Retrieval-Augmented Generation pipeline using Azure AI Search and GPT-5-mini.
+### Model Deployments
 
-## Development Environment
+✅ GPT-5-mini
 
-### Python Version
+✅ text-embedding-3-small
 
-```text
-Python 3.14.3
-```
+### Responsibilities
 
-### Key Packages
-
-```text
-openai
-azure-search-documents
-python-dotenv
-```
-
-### Configuration Management
-
-```text
-.env
-```
+* Embedding generation
+* Contract reasoning
+* Risk analysis
+* Grounded response generation
 
 ***
 
-## Retrieval Validation
+## GPT-5-mini
 
-Successfully validated:
+Generates answers based only on retrieved contract content supplied by the RAG pipeline.
 
-✅ Search endpoint access
+### Capabilities
 
-✅ Authentication
+✅ Risk Identification
 
-✅ Index connectivity
+✅ Contract Analysis
 
-✅ Document retrieval
+✅ Clause Comparison
 
-### Retrieved Fields
+✅ Grounded Responses
 
-* chunk\_id
-* parent\_id
-* chunk
-* title
-* text\_vector
+✅ Citation-Based Explanations
 
 ***
 
-## Generation Validation
+## Filename-Based Citations
 
-Successfully validated:
+Responses include citations referencing actual contract documents.
 
-✅ GPT-5-mini deployment access
-
-✅ Endpoint connectivity
-
-✅ Authentication
-
-✅ Chat completions
-
-***
-
-## End-to-End RAG Workflow
-
-### Workflow
-
-1. User submits a contract question.
-2. An embedding is generated for the question.
-3. Azure AI Search performs vector similarity search.
-4. Relevant contract chunks are retrieved.
-5. Context is assembled for GPT-5-mini.
-6. GPT-5-mini generates analysis.
-7. Supporting citations are returned.
-
-### Example Questions
-
-* Which contracts contain automatic renewal clauses?
-* Which agreements allow termination without cause?
-* Which contracts expose the client to unlimited liability?
-* What confidentiality obligations survive termination?
-
-### Outcome
-
-✅ Retrieval working
-
-✅ Generation working
-
-✅ Source citations working
-
-✅ Complete RAG workflow operational
-
-***
-
-# Phase 3 – Power Apps Prototype
-
-## Objective
-
-Provide a user-friendly front-end experience for contract analysis.
-
-## Technologies
-
-* Power Apps
-* Power Automate
-
-## Results
-
-✅ User interface created
-
-✅ Question submission implemented
-
-✅ API integration completed
-
-✅ Responses displayed within Power Apps
-
-## Outcome
-
-Users can perform contract analysis without interacting directly with Azure services.
-
-***
-
-# Phase 4 – Azure Function API Integration
-
-## Objective
-
-Create a scalable API layer between Power Platform and the RAG backend.
-
-## Components
-
-* Azure Function (Python)
-* Azure AI Search
-* Azure OpenAI
-* Power Automate
-
-## Results
-
-✅ Function created
-
-✅ API endpoint exposed
-
-✅ Retrieval pipeline integrated
-
-✅ Response formatting implemented
-
-✅ Power Apps connectivity validated
-
-## Outcome
-
-A reusable API architecture was established for future web and application integrations.
-
-***
-
-# Phase 5 – Deployment and Citation Enhancement
-
-## Phase 5A – Azure Deployment
-
-### Objective
-
-Deploy the application to Azure and validate production functionality.
-
-### Results
-
-✅ Azure CLI configured
-
-✅ Azure authentication completed
-
-✅ Azure Function deployed
-
-✅ Production endpoint operational
-
-✅ End-to-end testing completed
-
-### Outcome
-
-The Contract Risk Intelligence Platform became fully cloud-hosted and accessible through a production API.
-
-***
-
-## Phase 5B – Citation Enhancement
-
-### Problem
-
-The original citation strategy used generic references:
-
-```text
-[Source 1]
-[Source 2]
-[Source 3]
-```
-
-Although technically functional, these citations did not clearly identify supporting contract documents.
-
-### Solution
-
-The retrieval context was updated to include actual document filenames.
-
-Example:
-
-```text
-DOCUMENT: NDA-001.pdf
-```
-
-GPT-5-mini was instructed to:
-
-* Cite actual filenames
-* Avoid generic source labels
-* Reference only retrieved documents
-
-### Result
-
-Responses now include citations such as:
+### Example
 
 ```text
 NDA-001.pdf
@@ -510,88 +265,53 @@ Vendor-Agreement-001.pdf
 Employment-Agreement-001.pdf
 ```
 
-rather than abstract source identifiers.
+### Benefits
 
-### Business Value
+✅ Improved Transparency
 
-✅ Improved citation transparency
+✅ Better Traceability
 
-✅ Better source traceability
+✅ Reduced Hallucination Risk
 
-✅ Increased attorney confidence
+✅ Increased User Trust
 
-✅ Reduced review effort
-
-✅ Reduced hallucination risk
+✅ Faster Legal Review
 
 ***
 
-# Lessons Learned
+# End-to-End Workflow
 
-Key lessons from this project include:
-
-* Effective RAG systems depend on retrieval quality as much as model quality.
-* Vector embeddings capture semantic meaning rather than exact keyword matches.
-* Grounded AI systems improve reliability and reduce hallucination risk.
-* Azure AI Search provides an effective retrieval layer for enterprise AI applications.
-* Clear citation strategies improve transparency, trustworthiness, and user adoption.
-
-***
-
-# Technology Stack
-
-## Azure
-
-* Azure AI Foundry
-* Azure AI Search
-* Azure Blob Storage
-* Azure Functions
-
-## AI Models
-
-* GPT-5-mini
-* text-embedding-3-small
-
-## Development
-
-* Python
-* OpenAI SDK
-* Azure Search SDK
-* REST APIs
-
-## Power Platform
-
-* Power Apps
-* Power Automate
+1. User submits a contract-related question.
+2. The question is converted into a vector embedding using text-embedding-3-small.
+3. Azure AI Search performs vector similarity search.
+4. Relevant contract chunks are retrieved.
+5. Azure Function assembles retrieval context.
+6. GPT-5-mini generates a grounded response.
+7. Supporting filenames are returned as citations.
+8. Results are displayed in Power Apps or Streamlit.
 
 ***
 
-# Production Capabilities
+# Deployment Models Summary
 
-✅ Contract Retrieval
-
-✅ Vector Search
-
-✅ Semantic Search
-
-✅ GPT-Powered Contract Analysis
-
-✅ Source Traceability
-
-✅ Filename-Based Citations
-
-✅ Power Apps Integration
-
-✅ Azure Deployment
-
-✅ End-to-End RAG Workflow
+| Component        | Enterprise Deployment | Public Deployment                                 |
+| ---------------- | --------------------- | ------------------------------------------------- |
+| Front End        | Power Apps            | Streamlit                                         |
+| Workflow Layer   | Power Automate        | Direct API Call                                   |
+| API Layer        | Azure Function API    | Azure Function API                                |
+| Search Layer     | Azure AI Search       | Azure AI Search                                   |
+| AI Layer         | Azure AI Foundry      | Azure AI Foundry                                  |
+| LLM              | GPT-5-mini            | GPT-5-mini                                        |
+| Authentication   | Microsoft 365         | Public Access                                     |
+| Primary Audience | Law Firms             | Recruiters, Website Visitors, Prospective Clients |
 
 ***
 
-# Final Outcome
+# Architecture Outcome
 
-The Contract Risk Intelligence Platform demonstrates a complete Azure-based Retrieval-Augmented Generation architecture for legal document analysis.
+The Contract Risk Intelligence Platform demonstrates two real-world deployment approaches built on a shared Azure AI backend:
 
-The solution retrieves relevant contract language from Azure AI Search, generates grounded responses using GPT-5-mini, and provides filename-based citations that improve transparency and traceability for legal review.
+* An enterprise-ready Microsoft 365 solution using Power Apps and Power Automate for legal professionals.
+* A publicly accessible Streamlit application for demonstrations, portfolio presentation, and client evaluation.
 
-**Status:** 🚀 Deployed, Operational, and Successfully Validated End-to-End.
+Both deployments use Retrieval-Augmented Generation (RAG), Azure AI Search, Azure AI Foundry, GPT-5-mini, Azure Functions, and filename-based citations to provide transparent, grounded contract risk analysis.
