@@ -2,3 +2,5 @@ openai
 azure-search-documents
 python-dotenv
 azure-functions
+streamlit
+requests
