@@ -38,8 +38,7 @@ if st.button("Analyze Contract"):
 
             result = response.json()
 
-            st.subheader("Analysis")
-            st.markdown(result["answer"])
+            st.write(result)
 
             st.subheader("Sources Used")
 
