@@ -38,12 +38,21 @@ if st.button("Analyze Contract"):
 
             result = response.json()
 
-            st.write(result)
+            
+            
+    if result.get("status") == "success":
 
-            st.subheader("Sources Used")
+        st.subheader("Analysis")
+        st.markdown(result.get("answer", ""))
 
-            for source in result["sources"]:
-                st.markdown(f"- {source}")
+        st.subheader("Sources Used")
+
+        for source in result.get("sources", []):
+        st.markdown(f"- {source}")
+
+    else:
+        st.error(result.get("message", "An unknown error occurred."))
+
 
 st.divider()
 
