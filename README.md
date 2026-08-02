@@ -399,51 +399,13 @@ The solution demonstrates two deployment models:
 ✅ Website Ready
 
 
----
 
-## Evolution to Agentic AI
 
-This project served as the foundation for a more advanced follow-on solution:
 
-# Agentic Contract Intelligence Platform
 
-## Overview
 
-Building on the Retrieval-Augmented Generation (RAG) architecture of the Contract Risk Intelligence Platform, the Agentic Contract Intelligence Platform introduces a multi-agent AI workflow where specialized AI agents collaborate to perform contract analysis.
 
-Instead of relying on a single AI response, the system uses multiple AI agents with distinct responsibilities to identify risks, recommend negotiation strategies, and generate executive-ready guidance.
 
----
 
-## Agentic Workflow
-
-```text
-User Question
-      ↓
-Orchestrator Agent
-      ↓
-Risk Analysis Agent
-      ↓
-Negotiation Agent
-      ↓
-Executive Summary Agent
-      ↓
-Executive Recommendation
-```
-
----
-
-## Agent Roles
-
-### Orchestrator Agent
-
-Coordinates the end-to-end workflow and manages communication between specialized agents.
-
-**Responsibilities**
-
-- Receives user requests
-- Initiates agent execution
-- Passes state between agents
-- Aggregates outputs into a unified workflow
 
 
