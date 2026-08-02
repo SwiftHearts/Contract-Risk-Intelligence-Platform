@@ -4,7 +4,7 @@
 
 The Contract Risk Intelligence Platform is an AI-powered legal document analysis solution built on Microsoft Azure. The platform uses Retrieval-Augmented Generation (RAG) to help legal professionals analyze contracts, identify potential risks, and receive grounded responses supported by source citations.
 
-Instead of relying solely on general AI model knowledge, the solution retrieves relevant contract language from Azure AI Search and uses GPT-5-mini to generate responses based on actual contract content.
+This platform retrieves relevant contract language from Azure AI Search and uses GPT-5-mini to generate responses based on an uploaded contract's content.
 
 The project demonstrates two deployment models:
 
@@ -13,11 +13,15 @@ The project demonstrates two deployment models:
 
 Both versions share the same Azure-based RAG backend.
 
+This project is the foundation for a follow-on Agentic Contract Intelligence Platform that extends the solution from Retrieval-Augmented Generation (RAG) to multi-agent AI orchestration.
+
+
+
 ---
 
 ## Live Demo
 
-Try the public version of the application:
+Try the public version of the application: https://www.swiftheartsai.com/project-showcase
 
 ### Public Streamlit Demo
 
@@ -265,19 +269,8 @@ Contract chunks, metadata, and embeddings are stored in Azure AI Search to suppo
 
 ---
 
-## Citation Enhancement
 
-The platform was enhanced to improve transparency and legal traceability.
-
-### Previous Citation Format
-
-```text
-[Source 1]
-
-[Source 2]
-```
-
-### Enhanced Citation Format
+### Citation Format
 
 ```text
 NDA-001.pdf
@@ -389,6 +382,11 @@ The solution demonstrates two deployment models:
 - Power Apps
 - Python
 - REST APIs
+- Multi-Agent Systems
+- Agent Orchestration
+- Structured JSON Outputs
+- AI Workflow Automation
+- Python Agent Framework Design
 
 🚀 **Status: Publicly Deployed and Operational**
 
@@ -399,3 +397,53 @@ The solution demonstrates two deployment models:
 ✅ Portfolio Ready
 
 ✅ Website Ready
+
+
+---
+
+## Evolution to Agentic AI
+
+This project served as the foundation for a more advanced follow-on solution:
+
+# Agentic Contract Intelligence Platform
+
+## Overview
+
+Building on the Retrieval-Augmented Generation (RAG) architecture of the Contract Risk Intelligence Platform, the Agentic Contract Intelligence Platform introduces a multi-agent AI workflow where specialized AI agents collaborate to perform contract analysis.
+
+Instead of relying on a single AI response, the system uses multiple AI agents with distinct responsibilities to identify risks, recommend negotiation strategies, and generate executive-ready guidance.
+
+---
+
+## Agentic Workflow
+
+```text
+User Question
+      ↓
+Orchestrator Agent
+      ↓
+Risk Analysis Agent
+      ↓
+Negotiation Agent
+      ↓
+Executive Summary Agent
+      ↓
+Executive Recommendation
+```
+
+---
+
+## Agent Roles
+
+### Orchestrator Agent
+
+Coordinates the end-to-end workflow and manages communication between specialized agents.
+
+**Responsibilities**
+
+- Receives user requests
+- Initiates agent execution
+- Passes state between agents
+- Aggregates outputs into a unified workflow
+
+

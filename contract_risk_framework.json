@@ -1,0 +1,17 @@
+{
+  "Unlimited Liability": {
+    "severity": "High"
+  },
+
+  "Auto Renewal": {
+    "severity": "Medium"
+  },
+
+  "Termination Restrictions": {
+    "severity": "High"
+  },
+
+  "Weak Confidentiality": {
+    "severity": "Medium"
+  }
+}
