@@ -1,6 +1,9 @@
 # Import Streamlit and requests libraries for building the web interface and making HTTP requests
 import streamlit as st
 
+# Import the os library for accessing environment variables
+import os
+
 # Import the requests library for making HTTP requests to the Azure Function
 import requests
 
@@ -46,7 +49,9 @@ if st.button("Analyze Contract"):
                 FUNCTION_URL,
                 json={"question": question},
                 headers={"x-functions-key": 
-            st.secrets["FUNCTION_KEY"]}
+            os.getenv("FUNCTION_KEY") or     
+            st.secrets["FUNCTION_KEY"]},
+                timeout=60
         )
             
 
