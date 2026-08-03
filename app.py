@@ -44,30 +44,35 @@ if st.button("Analyze Contract"):
             # Make a POST request to the Azure Function with the user's question as JSON data
             response = requests.post(
                 FUNCTION_URL,
-                json={
-                    "question": question
-                }
-            )
+                json={"question": question},
+                headers={"x-functions-key": 
+            st.secrets["FUNCTION_KEY"]}
+        )
+            
 
             result = response.json()
 
             
-    # Check if the analysis was successful; if so, display the answer and sources in the Streamlit app        
-    if result.get("status") == "success":
+        # Check if the analysis was successful; if so, display the answer and sources in the Streamlit app        
+        if result.get("status") == "success":
 
-        # Display the analysis results in the Streamlit app, including the answer and sources used for the analysis
-        st.subheader("Analysis")
-        st.markdown(result.get("answer", ""))
+            # Display the analysis results in the Streamlit app, including the answer and sources used for the analysis
+            st.subheader("Analysis")
+            st.markdown(result.get("answer", ""))
 
-        # Display the sources used for the analysis in a subheader section, listing each source as a markdown bullet point
-        st.subheader("Sources Used")
+            # Display the sources used for the analysis in a subheader section, listing each source as a markdown bullet point
+            st.subheader("Sources Used")
 
-        # Loop through the sources provided in the result and display each source as a markdown bullet point in the Streamlit app
-        for source in result.get("sources", []):
-            st.markdown(f"- {source}")
+            # Loop through the sources provided in the result and display each source as a markdown bullet point in the Streamlit app
+            for source in result.get("sources", []):
+                st.markdown(f"- {source}")
 
+        else:
+            st.error(result.get("message", "An unknown error occurred."))
+
+    # If the user has not entered a question, display a warning message prompting them to do so
     else:
-        st.error(result.get("message", "An unknown error occurred."))
+        st.warning("Please enter a question to analyze the contract.")
 
 # Add a divider and a caption to provide additional context about the app's development and the technologies used
 st.divider()

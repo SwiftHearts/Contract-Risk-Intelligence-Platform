@@ -17,8 +17,9 @@ app = func.FunctionApp()
 @app.route(
     # Define the route for the Azure Function that handles contract risk analysis requests
     route="ContractRiskAnalysis",
-    # Anyone can access this function without authentication, as specified by the auth_level parameter
-    auth_level=func.AuthLevel.ANONYMOUS
+    # Requires a valid function key on every request, so only callers with the key
+    # (e.g. the Streamlit app) can reach this endpoint — prevents public/anonymous access
+    auth_level=func.AuthLevel.FUNCTION
 )
 # Define the ContractRiskAnalysis function that processes incoming HTTP requests for contract risk analysis
 # Req contains the HTTP request data, and -> func.HttpResponse indicates that the function will return an HTTP response
@@ -63,10 +64,12 @@ def ContractRiskAnalysis(req: func.HttpRequest) -> func.HttpResponse:
     # Handle any exceptions that occur during processing and return an error response with the exception message
     except Exception as e:
 
+        logging.exception("Contract Risk Analysis failed.")
+
         return func.HttpResponse(
             json.dumps({
                 "status": "error",
-                "message": str(e)
+                "message": "An internal error occurred while processing your request."
             }),
             # Set the response mimetype to application/json and return a 500 Internal Server Error status code
             mimetype="application/json",
