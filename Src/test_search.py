@@ -5,9 +5,9 @@ from azure.core.credentials import AzureKeyCredential
 
 load_dotenv()
 
-search_endpoint = os.getenv("SEARCH_ENDPOINT")
-search_key = os.getenv("SEARCH_KEY")
-index_name = os.getenv("SEARCH_INDEX_NAME")
+search_endpoint = os.getenv("AZURE_SEARCH_ENDPOINT")
+search_key = os.getenv("AZURE_SEARCH_KEY")
+index_name = os.getenv("AZURE_SEARCH_INDEX_NAME")
 
 client = SearchClient(
     endpoint=search_endpoint,

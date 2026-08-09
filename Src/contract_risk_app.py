@@ -33,11 +33,11 @@ load_dotenv()
 # Define the Azure AI Search endpoint, key, and index name from environment variables
 
 # Get the Azure AI Search endpoint from the environment variable SEARCH_ENDPOINT
-SEARCH_ENDPOINT = os.getenv("SEARCH_ENDPOINT")
+AZURE_SEARCH_ENDPOINT = os.getenv("AZURE_SEARCH_ENDPOINT")
 # Get the Azure AI Search key from the environment variable SEARCH_KEY
-SEARCH_KEY = os.getenv("SEARCH_KEY")
+AZURE_SEARCH_KEY = os.getenv("AZURE_SEARCH_KEY")
 # Get the Azure AI Search index name from the environment variable SEARCH_INDEX_NAME
-SEARCH_INDEX_NAME = os.getenv("SEARCH_INDEX_NAME")
+AZURE_SEARCH_INDEX_NAME = os.getenv("AZURE_SEARCH_INDEX_NAME")
 
 
 # ------------------------------------------------------------
@@ -64,9 +64,9 @@ EMBEDDING_DEPLOYMENT_NAME = os.getenv(
 # The SearchClient is initialized with the endpoint, index name, and credential 
 # (AzureKeyCredential) to authenticate requests to the Azure AI Search service.
 search_client = SearchClient(
-    endpoint=SEARCH_ENDPOINT,
-    index_name=SEARCH_INDEX_NAME,
-    credential=AzureKeyCredential(SEARCH_KEY)
+    endpoint=AZURE_SEARCH_ENDPOINT,
+    index_name=AZURE_SEARCH_INDEX_NAME,
+    credential=AzureKeyCredential(AZURE_SEARCH_KEY)
 )
 
 # Create an AzureOpenAI client to interact with Azure OpenAI services

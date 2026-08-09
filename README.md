@@ -400,6 +400,10 @@ The solution demonstrates two deployment models:
 
 
 
+* This project was initially scaffolded with AI assistance, with each component subsequently reviewed in depth to build genuine mastery.*
+
+
+
 
 
 
